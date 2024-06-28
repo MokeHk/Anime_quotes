@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="utf-8" />
+    <title>Anime</title>
+  </head>
+  <body>
+    {% if anime %}
+    <ul>
+      {% for ani in anime %}
+      <li><a href="{{ani.id}}/">{{ani.name}}</a></li>
+      {% endfor %}
+    </ul>
+    {%else%}
+    <p>No Anime available</p>
+    {% endif %}
+  </body>
+</html>

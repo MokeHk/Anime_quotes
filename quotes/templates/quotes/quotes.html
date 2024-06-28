@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="utf-8" />
+    <title>{{character_name}} Quotes</title>
+  </head>
+  <body>
+    {% if quotes %}
+    <ul>
+      {% for q in quotes %}
+      <li><a href="/quote/{{q.id}}/">{{q.text}}</a></li>
+      {% endfor %}
+    </ul>
+    {%else%}
+    <p>Quote not found</p>
+    {% endif %}
+  </body>
+</html>

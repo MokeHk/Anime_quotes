@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="utf-8" />
+    <title>{{anime_name}} Characters</title>
+  </head>
+  <body>
+    {% if characters %}
+    <ul>
+      {% for ch in characters %}
+      <li>
+        <a href="/anime/character/{{ch.id}}">{{ch.name}}</a>
+      </li>
+      {% endfor %}
+    </ul>
+    {%else%}
+    <p>Character not found</p>
+    {% endif %}
+  </body>
+</html>
