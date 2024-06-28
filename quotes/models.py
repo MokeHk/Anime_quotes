@@ -16,7 +16,7 @@ class Character(models.Model):
     anime = models.ForeignKey(Anime, on_delete=models.CASCADE)
 
     def __str__(self) -> str:
-        return self.name + " from " + self.anime.name
+        return self.name
 
 # quotes table
 class Quote(models.Model):
@@ -24,4 +24,4 @@ class Quote(models.Model):
     character = models.ForeignKey(Character, on_delete=models.CASCADE)
 
     def __str__(self) -> str:
-        return self.character.name + ": " + self.text
+        return self.text
