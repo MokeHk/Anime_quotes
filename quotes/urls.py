@@ -8,5 +8,6 @@ urlpatterns = [
     path("character/<int:character_id>/",
          views.index_character_quotes, name="index all quotes"),
     path("quote/<int:quote_id>/",
-         views.get_quote, name="get one quote")
+         views.get_quote, name="get one quote"),
+     
 ]

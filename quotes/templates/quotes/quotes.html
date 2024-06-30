@@ -3,14 +3,60 @@
   <head>
     <meta charset="utf-8" />
     <title>{{character_name}} Quotes</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
+      crossorigin="anonymous"
+    />
   </head>
-  <body>
+  <body style="background-color: #12296c;">
     {% if quotes %}
-    <ul>
+    <div class="row" style="max-width: 100%">
+    {% for q in quotes %}
+    <div class="col-sm-4" style="display: flex;">
+    <div class="card mb-3 text-black" style="background-color: #e6f026; margin: 30px 20px 0px 20px; border-radius: 10%;">
+      <div class="row g-0" style="margin: 30px 20px 0px 20px;">
+        <div class="col-md-4">
+          <img src="{{q.character.pic_url}}" class="img-fluid rounded-start" style="border-radius: 50%;" alt="..." />
+        </div>
+        <div class="col-md-8">
+          <div class="card-body">
+            <h5 class="card-title"><img src="https://images.squarespace-cdn.com/content/v1/519dc376e4b0726806f1fb72/1408410514670-W659DFKRUDB5HSCP97KD/image-asset.png?format=500w" alt="" style="height: 40px; width: 40px;"></h5>
+            <p class="card-text">
+              {{q.text}}
+            </p>
+            <hr>
+            <p class="card-text">
+              <p>{{q.character.name}}</p>
+              <small>{{q.character.anime.name}}</small>
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+    </div>
+    {% endfor %}
+    </div>
+    <!-- <div class="container">
+      {% for q in quotes %}
+      <div class="row">
+        <div class="col-12">
+          <a href="/quote/{{q.id}}/" style="text-decoration: none">
+            <h2 style="margin: 30px 10px 0px 10px; color: bisque">
+              {{q.text}}
+            </h2>
+          </a>
+          <hr style="color: aliceblue" />
+        </div>
+      </div>
+      {% endfor %}
+    </div> -->
+    <!-- <ul>
       {% for q in quotes %}
       <li><a href="/quote/{{q.id}}/">{{q.text}}</a></li>
       {% endfor %}
-    </ul>
+    </ul> -->
     {%else%}
     <p>Quote not found</p>
     {% endif %}
