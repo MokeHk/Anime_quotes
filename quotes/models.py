@@ -1,4 +1,6 @@
 from django.db import models
+from django.conf import settings
+# from django.contrib.auth.models import User
 
 # Create your models here.
 # animes table
@@ -33,16 +35,8 @@ class Quote(models.Model):
         return self.text
 
 
-# users table
-class User(models.Model):
-    user_name = models.CharField(max_length=150)
-    first_name = models.CharField(max_length=50)
-    last_name = models.CharField(max_length=50)
-    email_address = models.CharField(max_length=80)
-    password = models.CharField(max_length=500)
-
-
 # favorites table
 class Favorite(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    user = models.ForeignKey(settings.AUTH_USER_MODEL,
+                             on_delete=models.CASCADE)
     quote = models.ForeignKey(Quote, on_delete=models.CASCADE)
