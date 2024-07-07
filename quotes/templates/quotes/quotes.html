@@ -1,89 +1,62 @@
-{% extends 'quotes/base.html' %}
-{% block content %}
-    {% if quotes %}
-    <div class="row" style="max-width: 100%">
-        {% for q in quotes %}
-        <div class="col-sm-4" style="display: flex;">
-            <div class="card mb-3 text-black" style="background-color: #e6f026; margin: 30px 20px 0px 20px; border-radius: 10%;">
-                <div class="row g-0" style="margin: 30px 20px 0px 20px;">
-                    <div class="col-md-4">
-                        <img src="{{q.character.pic_url}}" class="img-fluid rounded-start" style="border-radius: 50%;" alt="..." />
-                    </div>
-                    <div class="col-md-8">
-                        <div class="card-body">
-                            <h5 class="card-title">
-                                <img src="https://images.squarespace-cdn.com/content/v1/519dc376e4b0726806f1fb72/1408410514670-W659DFKRUDB5HSCP97KD/image-asset.png?format=500w" alt="" style="height: 40px; width: 40px;">
-                            </h5>
-                            <p class="card-text">
-                                {{q.text}}
-                            </p>
-                            <hr>
-                            <p class="card-text">
-                                <p>{{q.character.name}}</p>
-                                <small>{{q.character.anime.name}}</small>
-                            </p>
-                        </div>
-                    </div>
-                </div>
-                <a href="#" class="favorite-link" data-quote-id="{{ q.id }}">
-                    {% if q in favorite_quotes %}
-                        Unfavorite
-                    {% else %}
-                        Favorite
-                    {% endif %}
-                </a>
-            </div>
-        </div>
-        {% endfor %}
-    </div>
-    {% else %}
-    <p>Quote not found</p>
-    {% endif %}
+{% extends 'quotes/base.html' %} {% block content %} {% if quotes %}
+<div class="quote-container">
+  {% for q in quotes %}
+  <div class="quote-card">
+    <p>{{q.text}}</p>
+    <a href="#" class="favorite-btn" data-quote-id="{{ q.id }}">
+      {% if q in favorite_quotes %} Unfavorite {% else %} Favorite {% endif %}
+    </a>
+  </div>
+  {% endfor %}
+</div>
+{% else %}
+<p>Quote not found</p>
+{% endif %}
 
-    <script>
-    document.addEventListener('DOMContentLoaded', function() {
-        const favoriteLinks = document.querySelectorAll('.favorite-link');
-        
-        favoriteLinks.forEach(link => {
-            link.addEventListener('click', function(event) {
-                event.preventDefault();
-                const quoteId = this.getAttribute('data-quote-id');
-                const csrftoken = getCookie('csrftoken');  // Function to get CSRF token
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    const favoriteLinks = document.querySelectorAll(".favorite-link");
 
-                fetch(`/anime/favorite/${quoteId}/`, {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'X-CSRFToken': csrftoken
-                    }
-                })
-                .then(response => response.json())
-                .then(data => {
-                    alert(data.message);
-                    if (data.favorited) {
-                        this.textContent = 'Unfavorite';
-                    } else {
-                        this.textContent = 'Favorite';
-                    }
-                })
-                .catch(error => console.error('Error:', error));
-            });
-        });
+    favoriteLinks.forEach((link) => {
+      link.addEventListener("click", function (event) {
+        event.preventDefault();
+        const quoteId = this.getAttribute("data-quote-id");
+        const csrftoken = getCookie("csrftoken"); // Function to get CSRF token
 
-        function getCookie(name) {
-            let cookieValue = null;
-            if (document.cookie && document.cookie !== '') {
-                const cookies = document.cookie.split(';');
-                for (let i = 0; i < cookies.length; i++) {
-                    const cookie = cookies[i].trim();
-                    if (cookie.substring(0, name.length + 1) === (name + '=')) {
-                        cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
-                        break;
-                    }
-                }
+        fetch(`/anime/favorite/${quoteId}/`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            "X-CSRFToken": csrftoken,
+          },
+        })
+          .then((response) => response.json())
+          .then((data) => {
+            alert(data.message);
+            if (data.favorited) {
+              this.textContent = "Unfavorite";
+            } else {
+              this.textContent = "Favorite";
             }
-            return cookieValue;
-        }
+          })
+          .catch((error) => console.error("Error:", error));
+      });
     });
-    </script>
+
+    function getCookie(name) {
+      let cookieValue = null;
+      if (document.cookie && document.cookie !== "") {
+        const cookies = document.cookie.split(";");
+        for (let i = 0; i < cookies.length; i++) {
+          const cookie = cookies[i].trim();
+          if (cookie.substring(0, name.length + 1) === name + "=") {
+            cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+            break;
+          }
+        }
+      }
+      return cookieValue;
+    }
+  });
+</script>
 {% endblock %}
