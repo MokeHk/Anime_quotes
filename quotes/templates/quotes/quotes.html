@@ -1,4 +1,5 @@
 {% extends 'quotes/base.html' %} {% block content %} {% if quotes %}
+<h1>{{character_name}} Quotes</h1>
 <div class="quote-container">
   {% for q in quotes %}
   <div class="quote-card">
