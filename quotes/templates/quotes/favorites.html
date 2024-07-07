@@ -1,0 +1,72 @@
+{% extends 'quotes/base.html' %} {% block content %} {% if favorites %}
+<h1>Your Favorite Quotes</h1>
+<div class="quote-container">
+  {% for q in favorites %}
+  <div class="favorite-quote-card">
+    <img
+      src="https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fi5.walmartimages.com%2Fasr%2F6b6ab5da-ba53-4580-a94c-bb49ffe805ea.0cb2b8967890c943bfa4cc223694a5f8.jpeg&f=1&nofb=1&ipt=14992d1518200ab2d8638f90b2ebc7d5db045d45864982eafdab6ad9394bcb07&ipo=images"
+      alt="Naruto"
+    />
+    <div class="favorite-quote-card-body">
+      <p>{{q.quote.text}}</p>
+      <hr />
+      <span>{{q.quote.character.name}}</span>
+      <span>- {{q.quote.character.anime.name}}</span>
+      <a href="#" class="favorite-btn" data-quote-id="{{ q.id }}">
+        {% if q in favorite_quotes %} Unfavorite {% else %} Favorite {% endif %}
+      </a>
+    </div>
+  </div>
+  {% endfor %}
+</div>
+{% else %}
+<p>Favorites not found</p>
+{% endif %}
+
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    const favoriteLinks = document.querySelectorAll(".favorite-btn");
+
+    favoriteLinks.forEach((link) => {
+      link.addEventListener("click", function (event) {
+        event.preventDefault();
+        const quoteId = this.getAttribute("data-quote-id");
+        const csrftoken = getCookie("csrftoken"); // Function to get CSRF token
+
+        fetch(`/anime/favorite/${quoteId}/`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            "X-CSRFToken": csrftoken,
+          },
+        })
+          .then((response) => response.json())
+          .then((data) => {
+            alert(data.message);
+            if (data.favorited) {
+              this.textContent = "Unfavorite";
+            } else {
+              this.textContent = "Favorite";
+            }
+          })
+          .catch((error) => console.error("Error:", error));
+      });
+    });
+
+    function getCookie(name) {
+      let cookieValue = null;
+      if (document.cookie && document.cookie !== "") {
+        const cookies = document.cookie.split(";");
+        for (let i = 0; i < cookies.length; i++) {
+          const cookie = cookies[i].trim();
+          if (cookie.substring(0, name.length + 1) === name + "=") {
+            cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+            break;
+          }
+        }
+      }
+      return cookieValue;
+    }
+  });
+</script>
+{% endblock %}
