@@ -5,6 +5,22 @@ body {
 #app {
   padding: 2em;
 }
+.quote-container {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  column-gap: 5%;
+  row-gap: 20%;
+}
+.quote-card {
+  display: flex;
+  flex-direction: column;
+  padding: 1em;
+}
+.favorite-btn {
+  align-self: end;
+  text-decoration: none;
+}
+
 .container {
   font-family: "Comfortaa", sans-serif;
   display: grid;
@@ -16,16 +32,22 @@ body {
   display: grid;
   grid-template-columns: repeat(1, 1fr);
   grid-template-rows: repeat(2 1fr);
-  border: 2px #000 solid;
+}
+.card,
+.quote-card {
   text-decoration: none;
+  border: 2px #000 solid;
   box-shadow: rgba(0, 0, 0, 0.3) 0px 19px 38px,
     rgba(0, 0, 0, 0.22) 0px 15px 12px;
   transition: all 0.5s ease-in-out;
 }
+
 .card:visited {
   color: inherit;
 }
-.card:hover {
+
+.card:hover,
+.quote-card:hover {
   box-shadow: rgba(0, 0, 0, 0.19) 0px 40px 40px,
     rgba(0, 0, 0, 0.23) 0px 40px 40px;
 }
@@ -46,14 +68,12 @@ h1 {
   display: flex;
   overflow: hidden;
   background-color: #333;
-  padding: 0.5em 2em 1em 0.5em;
+  padding: 1em 2em 1em 2em;
   justify-content: space-between;
   margin-bottom: 0.5em;
   position: sticky;
   top: 0;
   z-index: 1000;
-  align-items: center;
-  color: #fff;
 }
 #nav-navs {
   display: flex;
@@ -66,7 +86,3 @@ h1 {
   padding: 14px;
   text-decoration: none;
 }
-
-/* #nav-navs p {
-  color: #fff;
-} */
