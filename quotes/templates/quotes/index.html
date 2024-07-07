@@ -1,24 +1,13 @@
 {% extends 'quotes/base.html' %} {% block content %} {% if anime %}
-<div class="row" style="max-width: 100%">
+<h1>Anime Quotes</h1>
+<div class="container">
   {% for ani in anime %}
-  <div class="col-sm-4">
-    <div class="card" style="margin: 30px">
-      <a href="{{ani.id}}/" style="text-decoration: none">
-        <img
-          src="{{ani.pic_url}}"
-          alt="{{ani.name}}"
-          class="card-img-top"
-          height="350px"
-        />
-        <div class="card-body">
-          <h5 class="card-title" style="text-align: center">{{ani.name}}</h5>
-        </div>
-      </a>
-    </div>
-  </div>
+  <a class="card" href="{{ani.id}}/">
+    <img src="{{ani.pic_url}}" alt="{{ani.name}}" />
+    <h2>{{ani.name}}</h2>
+  </a>
   {% endfor %}
 </div>
 {%else%}
 <p>No Anime available</p>
-
 {% endif %} {% endblock %}
