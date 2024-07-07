@@ -107,3 +107,13 @@ def favorite(request, quote_id):
         favorited = False
 
     return JsonResponse({'message': message, 'favorited': favorited})
+
+
+def get_favorites(request):
+    favorites = Favorite.objects.all().filter(user_id=request.user.id)
+    print(favorites)
+    template = loader.get_template("quotes/favorites.html")
+    context = {
+        "favorites": favorites
+    }
+    return HttpResponse(template.render(context, request))

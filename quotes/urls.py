@@ -12,5 +12,6 @@ urlpatterns = [
          views.index_character_quotes, name="index_quotes"),
     path("quote/<int:quote_id>/",
          views.get_quote, name="get one quote"),
-    path("favorite/<int:quote_id>/", views.favorite, name="favorite_quote")
+    path("favorite/<int:quote_id>/", views.favorite, name="favorite_quote"),
+    path("favorite", views.get_favorites, name="favorites")
 ]
