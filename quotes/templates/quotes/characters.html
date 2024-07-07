@@ -1,21 +1,10 @@
 {% extends 'quotes/base.html' %} {% block content %} {% if characters %}
-<div class="row" style="max-width: 100%">
+<div class="container">
   {% for ch in characters %}
-  <div class="col-sm-4">
-    <div class="card" style="margin: 30px">
-      <a href="/anime/character/{{ch.id}}" style="text-decoration: none">
-        <img
-          src="{{ch.pic_url}}"
-          alt="{{ch.name}}"
-          class="card-img-top"
-          height="350px"
-        />
-        <div class="card-body">
-          <h5 class="card-title" style="text-align: center">{{ch.name}}</h5>
-        </div>
-      </a>
-    </div>
-  </div>
+  <a class="card" href="/anime/character/{{ch.id}}">
+    <img src="{{ch.pic_url}}" alt="{{ch.name}}" />
+    <h2>{{ch.name}}</h2>
+  </a>
   {% endfor %}
 </div>
 {%else%}
