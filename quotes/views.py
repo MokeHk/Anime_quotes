@@ -102,21 +102,16 @@ def favorite(request, quote_id):
     user = request.user
     favorite, created = Favorite.objects.get_or_create(user=user, quote=quote)
 
-    if created:
-        message = "Favorite Quote Added"
-        favorited = True
-    else:
+    if not created:
         favorite.delete()
-        message = "Favorite Quote Removed"
-        favorited = False
 
-    return JsonResponse({'message': message, 'favorited': favorited})
+    referer_url = request.META.get('HTTP_REFERER', '/')
+    return redirect(referer_url)
 
 
 @login_required
 def get_favorites(request):
     favorites = Favorite.objects.all().filter(user_id=request.user.id)
-    print(favorites)
     template = loader.get_template("quotes/favorites.html")
     context = {
         "favorites": favorites
