@@ -20,9 +20,7 @@ def register_user(request):
             username = form.cleaned_data['username']
             password = form.cleaned_data['password1']
             user = authenticate(username=username, password=password)
-            login(request, user)
-            messages.success(
-                request, "You Have Successfully Registered! Welcome!")
+            login(request, user)            
             return redirect('home')
     else:
         form = SignUpForm()
@@ -38,8 +36,7 @@ def login_user(request):
 
         user = authenticate(request, username=username, password=password)
         if user is not None:
-            login(request, user)
-            messages.success(request, 'You are now logged in')
+            login(request, user)           
             return redirect('home')
         else:
             messages.error(request, 'Invalid username or password')
@@ -48,8 +45,7 @@ def login_user(request):
 
 
 def logout_user(request):
-    logout(request)
-    messages.success(request, 'You are now logged out')
+    logout(request)    
     return redirect('login')
 
 

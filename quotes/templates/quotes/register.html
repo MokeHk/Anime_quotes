@@ -18,15 +18,12 @@
         <div class="title"><span>SignUp Form</span></div>
         <form method="POST" action="">
           {% csrf_token %} {% if form.errors %}
-          <div role="alert">
-            Your Form Has Errors {% for field in form %} {% if field.errors %}
+          <div
+            role="alert"
+            style="list-style: none; color: red; margin-bottom: 5px"
+          >
+            Your Form Has Errors: {% for field in form %} {% if field.errors %}
             {{field.errors }} {% endif %} {% endfor %}
-            <button
-              type="button"
-              class="btn-close"
-              data-bs-dismiss="alert"
-              aria-label="Close"
-            ></button>
           </div>
           {% endif %}
           <div class="row">
