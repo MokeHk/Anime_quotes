@@ -6,6 +6,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from .forms import SignUpForm
 from .models import Anime, Character, Quote, Favorite
+from django.db.models import Exists, OuterRef
 
 # Create your views here.
 
@@ -73,11 +74,14 @@ def index_anime_characters(request, anime_id):
 
 
 def index_character_quotes(request, character_id):
-    all_quotes = Quote.objects.all().filter(character_id=character_id)
     character_name = Character.objects.get(id=character_id).name
+    favorite_subquery = Favorite.objects.filter(
+        user_id=request.user.id, quote_id=OuterRef("pk"))
+    quotes = Quote.objects.annotate(favorited=Exists(favorite_subquery))
+    print(quotes)
     template = loader.get_template("quotes/quotes.html")
     context = {
-        "quotes": all_quotes,
+        "quotes": quotes,
         "character_name": character_name
     }
     return HttpResponse(template.render(context, request))
@@ -109,6 +113,7 @@ def favorite(request, quote_id):
     return JsonResponse({'message': message, 'favorited': favorited})
 
 
+@login_required
 def get_favorites(request):
     favorites = Favorite.objects.all().filter(user_id=request.user.id)
     print(favorites)

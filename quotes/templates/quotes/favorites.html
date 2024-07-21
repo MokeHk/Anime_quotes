@@ -12,61 +12,13 @@
       <hr />
       <span>{{q.quote.character.name}}</span>
       <span>- {{q.quote.character.anime.name}}</span>
-      <a href="#" class="favorite-btn" data-quote-id="{{ q.id }}">
-        {% if q in favorite_quotes %} Unfavorite {% else %} Favorite {% endif %}
-      </a>
+      <a href="{% url "favorite_quote" q.quote_id %}" class="favorite-btn">
+      Unfavorite
+    </a>
     </div>
   </div>
   {% endfor %}
 </div>
 {% else %}
 <p>Favorites not found</p>
-{% endif %}
-
-<script>
-  document.addEventListener("DOMContentLoaded", function () {
-    const favoriteLinks = document.querySelectorAll(".favorite-btn");
-
-    favoriteLinks.forEach((link) => {
-      link.addEventListener("click", function (event) {
-        event.preventDefault();
-        const quoteId = this.getAttribute("data-quote-id");
-        const csrftoken = getCookie("csrftoken"); // Function to get CSRF token
-
-        fetch(`/anime/favorite/${quoteId}/`, {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            "X-CSRFToken": csrftoken,
-          },
-        })
-          .then((response) => response.json())
-          .then((data) => {
-            alert(data.message);
-            if (data.favorited) {
-              this.textContent = "Unfavorite";
-            } else {
-              this.textContent = "Favorite";
-            }
-          })
-          .catch((error) => console.error("Error:", error));
-      });
-    });
-
-    function getCookie(name) {
-      let cookieValue = null;
-      if (document.cookie && document.cookie !== "") {
-        const cookies = document.cookie.split(";");
-        for (let i = 0; i < cookies.length; i++) {
-          const cookie = cookies[i].trim();
-          if (cookie.substring(0, name.length + 1) === name + "=") {
-            cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
-            break;
-          }
-        }
-      }
-      return cookieValue;
-    }
-  });
-</script>
-{% endblock %}
+{% endif %} {% endblock %}
