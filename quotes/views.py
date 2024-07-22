@@ -20,7 +20,7 @@ def register_user(request):
             username = form.cleaned_data['username']
             password = form.cleaned_data['password1']
             user = authenticate(username=username, password=password)
-            login(request, user)            
+            login(request, user)
             return redirect('home')
     else:
         form = SignUpForm()
@@ -36,7 +36,7 @@ def login_user(request):
 
         user = authenticate(request, username=username, password=password)
         if user is not None:
-            login(request, user)           
+            login(request, user)
             return redirect('home')
         else:
             messages.error(request, 'Invalid username or password')
@@ -45,7 +45,7 @@ def login_user(request):
 
 
 def logout_user(request):
-    logout(request)    
+    logout(request)
     return redirect('login')
 
 
@@ -73,7 +73,8 @@ def index_character_quotes(request, character_id):
     character_name = Character.objects.get(id=character_id).name
     favorite_subquery = Favorite.objects.filter(
         user_id=request.user.id, quote_id=OuterRef("pk"))
-    quotes = Quote.objects.annotate(favorited=Exists(favorite_subquery))
+    quotes = Quote.objects.all().filter(character_id=character_id).annotate(
+        favorited=Exists(favorite_subquery))
     print(quotes)
     template = loader.get_template("quotes/quotes.html")
     context = {
