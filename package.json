@@ -1,0 +1,19 @@
+{
+  "name": "anime_quotes",
+  "version": "1.0.0",
+  "description": "A card list where you can see a list of motivational quotes said by anime characters",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/MokeHk/Anime_quotes.git"
+  },
+  "author": "Mekonen",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/MokeHk/Anime_quotes/issues"
+  },
+  "homepage": "https://github.com/MokeHk/Anime_quotes#readme"
+}
